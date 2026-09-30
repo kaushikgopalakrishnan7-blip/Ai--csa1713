@@ -1,0 +1,14 @@
+Jug A Capacity: 4L
+Jug B Capacity: 3L
+Target Amount:  2L
+
+Solved in 4 steps!
++------+-------+-------+
+| Step | Jug A | Jug B |
++------+-------+-------+
+|   0  |    0  |    0  |
+|   1  |    0  |    3  |
+|   2  |    3  |    0  |
+|   3  |    3  |    3  |
+|   4  |    4  |    2  |
++------+-------+-------+
