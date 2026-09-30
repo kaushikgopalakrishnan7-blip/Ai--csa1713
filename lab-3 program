@@ -1,0 +1,84 @@
+from collections import deque
+
+def water_jug_bfs(capacity_a, capacity_b, target):
+    """
+    Solves the Water Jug Problem using Breadth-First Search (BFS).
+    
+    :param capacity_a: Capacity of Jug A
+    :param capacity_b: Capacity of Jug B
+    :param target: Target amount of water needed in either jug
+    """
+    # Check if a solution is mathematically possible
+    import math
+    if target > max(capacity_a, capacity_b):
+        return None, "Target exceeds jug capacities."
+    if target % math.gcd(capacity_a, capacity_b) != 0:
+        return None, "Target is not reachable with these jug capacities."
+
+    # Queue stores tuples of ((jug_a, jug_b), path_taken)
+    queue = deque([((0, 0), [(0, 0)])])
+    
+    # Set to keep track of visited states (jug_a_amount, jug_b_amount)
+    visited = set([(0, 0)])
+
+    while queue:
+        (a, b), path = queue.popleft()
+
+        # Goal state: Either jug contains the target amount
+        if a == target or b == target:
+            return path, f"Solved in {len(path) - 1} steps!"
+
+        # Generate all possible next states
+        next_states = []
+
+        # 1. Fill Jug A completely
+        next_states.append((capacity_a, b))
+        # 2. Fill Jug B completely
+        next_states.append((a, capacity_b))
+        # 3. Empty Jug A
+        next_states.append((0, b))
+        # 4. Empty Jug B
+        next_states.append((a, 0))
+        # 5. Pour Jug A into Jug B until Jug B is full or Jug A is empty
+        pour_a_to_b = min(a, capacity_b - b)
+        next_states.append((a - pour_a_to_b, b + pour_a_to_b))
+        # 6. Pour Jug B into Jug A until Jug A is full or Jug B is empty
+        pour_b_to_a = min(b, capacity_a - a)
+        next_states.append((a + pour_b_to_a, b - pour_b_to_a))
+
+        # Explore unvisited states
+        for state in next_states:
+            if state not in visited:
+                visited.add(state)
+                queue.append((state, path + [state]))
+
+    return None, "No solution exists."
+
+
+def print_solution(path):
+    """Displays the step-by-step state changes."""
+    print("+------+-------+-------+")
+    print("| Step | Jug A | Jug B |")
+    print("+------+-------+-------+")
+    for step, (a, b) in enumerate(path):
+        print(f"|  {step:2d}  |   {a:2d}  |   {b:2d}  |")
+    print("+------+-------+-------+")
+
+
+# Example Usage:
+if __name__ == "__main__":
+    jug_a_cap = 4
+    jug_b_cap = 3
+    target_amount = 2
+
+    print(f"Jug A Capacity: {jug_a_cap}L")
+    print(f"Jug B Capacity: {jug_b_cap}L")
+    print(f"Target Amount:  {target_amount}L\n")
+
+    path, message = water_jug_bfs(jug_a_cap, jug_b_cap, target_amount)
+
+    if path:
+        print(message)
+        print_solution(path)
+    else:
+        print(message)
