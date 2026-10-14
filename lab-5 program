@@ -1,0 +1,40 @@
+
+from collections import deque
+
+def solve():
+    start = (3, 3, 0)
+    goal = (0, 0, 1)
+
+    queue = deque([(start, [])])
+    visited = set()
+
+    while queue:
+        state, path = queue.popleft()
+
+        if state == goal:
+            for step in path + [state]:
+                print(step)
+            return
+
+        if state in visited:
+            continue
+        visited.add(state)
+
+        m, c, boat = state
+
+        for dm, dc in [(1, 0), (2, 0), (0, 1),
+                       (0, 2), (1, 1)]:
+            nm = m - dm if boat == 0 else m + dm
+            nc = c - dc if boat == 0 else c + dc
+            nb = 1 - boat
+
+            if 0 <= nm <= 3 and 0 <= nc <= 3:
+                if (nm == 0 or nm >= nc) and \
+                   (nm == 3 or 3 - nm >= 3 - nc):
+                    new_state = (nm, nc, nb)
+
+                    if new_state not in visited:
+                        queue.append((new_state,
+                                      path + [state]))
+
+solve()
