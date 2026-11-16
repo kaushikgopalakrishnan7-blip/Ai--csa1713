@@ -1,0 +1,38 @@
+colors = ['Red', 'Green', 'Blue']
+
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+assignment = {}
+
+def safe(region, color):
+    for n in neighbors[region]:
+        if assignment.get(n) == color:
+            return False
+    return True
+
+def solve():
+    if len(assignment) == 4:
+        return True
+
+    region = next(r for r in neighbors if r not in assignment)
+
+    for color in colors:
+        if safe(region, color):
+            assignment[region] = color
+
+            if solve():
+                return True
+
+            del assignment[region]
+
+    return False
+
+if solve():
+    print(assignment)
+else:
+    print("No Solution")
