@@ -1,0 +1,4 @@
+?- planet(Name, Position).
+
+Name = mercury,
+Position = 1.
