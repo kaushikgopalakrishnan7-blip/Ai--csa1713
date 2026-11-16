@@ -1,0 +1,35 @@
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+inputs = [1, 0]
+
+weights = [
+    [0.5, 0.4],
+    [0.3, 0.7]
+]
+
+bias = [0.1, 0.2]
+
+hidden = []
+
+for i in range(2):
+    total = 0
+
+    for j in range(2):
+        total += inputs[j] * weights[i][j]
+
+    hidden.append(sigmoid(total + bias[i]))
+
+output_weights = [0.6, 0.8]
+output_bias = 0.1
+
+total = 0
+
+for i in range(2):
+    total += hidden[i] * output_weights[i]
+
+output = sigmoid(total + output_bias)
+
+print("Output:", round(output, 4))
