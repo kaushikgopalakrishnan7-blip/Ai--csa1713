@@ -1,0 +1,37 @@
+import heapq
+
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 3), ('E', 5)],
+    'C': [('F', 2)],
+    'D': [('G', 4)],
+    'E': [('G', 2)],
+    'F': [('G', 3)],
+    'G': []
+}
+
+h = {
+    'A': 6, 'B': 5, 'C': 4,
+    'D': 4, 'E': 2, 'F': 3, 'G': 0
+}
+
+def astar(start, goal):
+    queue = [(h[start], 0, start, [start])]
+
+    while queue:
+        f, g, node, path = heapq.heappop(queue)
+
+        if node == goal:
+            return path, g
+
+        for n, cost in graph[node]:
+            new_g = g + cost
+            heapq.heappush(
+                queue,
+                (new_g + h[n], new_g, n, path + [n])
+            )
+
+path, cost = astar('A', 'G')
+
+print("Path:", path)
+print("Cost:", cost)
