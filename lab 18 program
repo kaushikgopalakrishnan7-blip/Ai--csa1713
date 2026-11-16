@@ -1,0 +1,4 @@
+?- person(Name, DOB).
+
+Name = 'Arun',
+DOB = '2005-04-12'.
