@@ -1,0 +1,8 @@
+student(101, 'Anu').
+student(102, 'Bala').
+
+teacher('Ravi', 'Artificial Intelligence').
+teacher('Meena', 'Database Systems').
+
+subject('Artificial Intelligence', 'AI301').
+subject('Database Systems', 'DB302').
