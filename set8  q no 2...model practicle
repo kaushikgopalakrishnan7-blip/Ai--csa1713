@@ -1,0 +1,42 @@
+def valid(m, c):
+    return (0 <= m <= 3 and 0 <= c <= 3 and
+            (m == 0 or m >= c) and
+            (3-m == 0 or 3-m >= 3-c))
+
+
+def dfs(state, visited, path):
+    if state == (0, 0, 0):
+        return True
+
+    m, c, boat = state
+
+    moves = [(1,0), (2,0), (0,1), (0,2), (1,1)]
+
+    for dm, dc in moves:
+        if boat == 1:
+            new = (m-dm, c-dc, 0)
+        else:
+            new = (m+dm, c+dc, 1)
+
+        if valid(new[0], new[1]) and new not in visited:
+            visited.add(new)
+            path.append(new)
+
+            if dfs(new, visited, path):
+                return True
+
+            path.pop()
+            visited.remove(new)
+
+    return False
+
+
+start = (3, 3, 1)
+path = [start]
+
+if dfs(start, {start}, path):
+    for state in path:
+        print(state)
+else:
+    print("No solution")
+-8
