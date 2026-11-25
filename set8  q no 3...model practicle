@@ -1,0 +1,35 @@
+% University Database
+
+% Student Details
+student(kaushik).
+student(kavin).
+student(prakash).
+
+% Faculty Details
+faculty(sundar).
+faculty(rajan).
+
+% Department Details
+department(cse).
+department(cyber_security).
+
+% Course Details
+course(ai).
+course(dbms).
+course(networking).
+
+% Student Course Details
+studies(kaushik, ai).
+studies(kavin, dbms).
+studies(prakash, networking).
+
+% Faculty Course Details
+teaches(sundar, ai).
+teaches(rajan, dbms).
+
+% Rules
+student_course(Student, Course) :-
+    studies(Student, Course).
+
+faculty_course(Faculty, Course) :-
+    teaches(Faculty, Course).
